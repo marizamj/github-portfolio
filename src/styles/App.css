@@ -1,0 +1,11 @@
+.app {
+}
+
+.app__header {
+  padding: 0 1em;
+  background: #2f6ab0;
+  background: -webkit-linear-gradient(to right, #2f6ab0, #c553df);
+  background: linear-gradient(to right, #2f6ab0, #c553df);
+  color: white;
+  overflow: hidden;
+}
