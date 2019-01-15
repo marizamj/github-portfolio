@@ -1,0 +1,19 @@
+.repo {
+  padding: 1em;
+  padding-bottom: 0;
+  border-top: 1px solid lightgrey;
+}
+
+.repo__contributor,
+.repo__load-more {
+  margin-bottom: 0.5em;
+}
+
+.repo__load-more {
+  cursor: pointer;
+  color: #2f6ab0;
+}
+
+.repo__load-more:hover {
+  text-decoration: underline;
+}

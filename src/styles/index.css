@@ -6,8 +6,19 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
 }
 
 h1 {
   font-weight: 400;
+}
+
+input[type='button'],
+input[type='submit'] {
+  color: white;
+  background: #2f6ab0;
+  font-size: 1em;
+  padding: 0.3em 1em;
+  border: 1px solid #2f6ab0;
+  border-radius: 3px;
 }

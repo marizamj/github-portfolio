@@ -1,0 +1,35 @@
+.search {
+  padding: 1em;
+  background: #fafafa;
+  position: relative;
+}
+
+.search__label,
+.search__input,
+.search__submit {
+  margin-right: 1em;
+}
+
+.search__input {
+  font-size: 1em;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+  padding: 5px;
+}
+
+.search__err {
+  display: inline-block;
+  color: red;
+  font-weight: 500;
+}
+
+@media only screen and (max-width: 500px) {
+  .search__err,
+  .search__submit {
+    margin-top: 1em;
+  }
+
+  .search * {
+    display: block;
+  }
+}

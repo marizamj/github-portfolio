@@ -1,0 +1,17 @@
+.repos {
+  margin-bottom: 1em;
+}
+
+.repos__msg,
+.repos__page {
+  padding: 1em;
+}
+
+.repos__btn {
+  margin-left: 1em;
+  cursor: pointer;
+}
+
+.repos__spinner {
+  margin: 1em;
+}
