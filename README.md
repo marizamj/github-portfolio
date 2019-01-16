@@ -31,3 +31,23 @@
   ```
   
     You will need this because there is a rate limit for unauthenticated requests to GitHub API that allows up to 60 requests per hour. For API requests using Basic Authentication or OAuth, you can make up to 5000 requests per hour.
+
+## Running the dev server
+
+```
+yarn start
+```
+Runs the app in the development mode.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+## Running the tests
+
+```
+yarn test
+```
+Launches the test runner in the interactive watch mode.
+
+## Built with
+
+* [Create React App](https://github.com/facebook/create-react-app)
+* [React Router](https://github.com/ReactTraining/react-router)
