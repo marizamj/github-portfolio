@@ -11,6 +11,10 @@
   overflow: hidden;
 }
 
+.app__header h1 {
+  cursor: pointer;
+}
+
 .app__spinner {
   margin: 1em;
 }

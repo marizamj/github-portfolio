@@ -4,7 +4,10 @@ import '../styles/App.css';
 
 function NoRepos({ userName }) {
   return (
-    <div className="no-repos">{`${userName} doesn’t have any public repositories yet.`}</div>
+    <div className="no-repos">
+      User<strong> {userName} </strong>
+      doesn’t have any public repositories yet.
+    </div>
   );
 }
 
