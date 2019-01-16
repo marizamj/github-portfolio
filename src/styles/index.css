@@ -21,4 +21,11 @@ input[type='submit'] {
   padding: 0.3em 1em;
   border: 1px solid #2f6ab0;
   border-radius: 3px;
+  cursor: pointer;
+}
+
+input[type='button']:active,
+input[type='submit']:active {
+  background: #245288;
+  border: 1px solid #245288;
 }
