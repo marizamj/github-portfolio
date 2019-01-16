@@ -1,4 +1,4 @@
-# GitHub Portfolio
+# GitHub Portfolio [![CircleCI](https://circleci.com/gh/marizamj/github-portfolio.svg?style=svg)](https://circleci.com/gh/marizamj/github-portfolio)
 
 ## Getting started
 
