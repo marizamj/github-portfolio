@@ -5,8 +5,13 @@
 }
 
 .repo__contributor,
+.repo__no-contributors,
 .repo__load-more {
   margin-bottom: 0.5em;
+}
+
+.repo__no-contributors {
+  color: grey;
 }
 
 .repo__load-more {

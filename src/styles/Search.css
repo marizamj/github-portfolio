@@ -24,6 +24,10 @@
 }
 
 @media only screen and (max-width: 500px) {
+  .search__input {
+    margin-top: 0.5em;
+  }
+
   .search__err,
   .search__submit {
     margin-top: 1em;

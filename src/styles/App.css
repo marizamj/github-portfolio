@@ -10,3 +10,11 @@
   color: white;
   overflow: hidden;
 }
+
+.app__spinner {
+  margin: 1em;
+}
+
+.no-repos {
+  padding: 1em;
+}
