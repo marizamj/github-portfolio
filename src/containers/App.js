@@ -20,7 +20,10 @@ class App extends Component {
     loadingContributorsOf: ''
   };
 
+  _isMounted = false;
+
   componentDidMount() {
+    this._isMounted = true;
     this.handleUser(this.props.match.params.userName);
   }
 
@@ -32,14 +35,21 @@ class App extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   handleSubmit = userName => {
     this.props.history.push(userName);
-    this.handleUser(userName);
   };
 
   handleUser = userName => {
     this.setState({ userName, repos: [], page: 1 });
     this.handleRetrieve(userName);
+
+    document.title = userName
+      ? `${userName} | GitHub Portfolio`
+      : 'GitHub Portfolio';
   };
 
   handleRetrieve = (userName, page = 1) => {
@@ -47,6 +57,7 @@ class App extends Component {
 
     fetchRepos(userName, page)
       .then(repos => {
+        if (!this._isMounted) return;
         this.setState({
           repos: this.state.repos.concat(repos),
           page,
@@ -55,7 +66,10 @@ class App extends Component {
         });
       })
       .then(() => fetchContributorsForAll(this.state.repos))
-      .then(contributors => this.setState({ contributors }))
+      .then(contributors => {
+        if (!this._isMounted) return;
+        this.setState({ contributors, error: null });
+      })
       .catch(error => this.setState({ error, loading: false }));
   };
 
@@ -71,15 +85,15 @@ class App extends Component {
     this.setState({ loadingContributorsOf: repoName });
 
     fetchContributors(repo, page)
-      .then(newContributors =>
+      .then(newContributors => {
         this.setState({
           contributors: {
             ...contributors,
             [repoName]: contributors[repoName].concat(newContributors)
           },
           loadingContributorsOf: ''
-        })
-      )
+        });
+      })
       .catch(console.error);
   };
 
@@ -99,7 +113,7 @@ class App extends Component {
     return (
       <div className="app">
         <header className="app__header">
-          <h1>GitHub Portfolio</h1>
+          <h1 onClick={() => this.handleSubmit('')}>GitHub Portfolio</h1>
         </header>
         <Search error={error} onSubmit={this.handleSubmit} />
         {userName && !error && (
