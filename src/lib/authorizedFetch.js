@@ -3,5 +3,5 @@ const headers = {
 };
 
 export default function authorizedFetch(url) {
-  return fetch(url, headers);
+  return fetch(url, { headers });
 }
