@@ -9,7 +9,7 @@ class Search extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.handleSubmit(this.state.value);
+    this.props.onSubmit(this.state.value);
     this.setState({ value: '' });
   };
 
@@ -31,9 +31,7 @@ class Search extends Component {
         <input className="search__submit" type="submit" value="Retrieve" />
 
         {error ? (
-          <div className="search__err">
-            Something went wrong. Please, try again.
-          </div>
+          <div className="search__err">Error: {error.message}.</div>
         ) : null}
       </form>
     );
@@ -41,8 +39,10 @@ class Search extends Component {
 }
 
 Search.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  error: PropTypes.object
+  onSubmit: PropTypes.func.isRequired,
+  error: PropTypes.shape({
+    message: PropTypes.string.isRequired
+  })
 };
 
 export default Search;

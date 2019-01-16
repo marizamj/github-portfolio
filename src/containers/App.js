@@ -1,30 +1,34 @@
 import React, { Component } from 'react';
 import '../styles/App.css';
 import { fetchRepos, fetchContributorsForAll, fetchContributors } from '../lib';
+import { MAX_ITEMS } from '../config';
 
-import ReposList from '../components/ReposList';
+import LoadMore from '../components/LoadMore';
+import NoRepos from '../components/NoRepos';
+import RepoList from '../components/RepoList';
 import Search from '../components/Search';
+import Spinner from '../components/Spinner';
 
 class App extends Component {
   state = {
     userName: '',
+    page: 1,
     repos: [],
     contributors: {},
-    page: 1,
     error: null,
     loading: false,
     loadingContributorsOf: ''
   };
 
   componentDidMount() {
-    this.handleUser(this.props.location.pathname.slice(1));
+    this.handleUser(this.props.match.params.userName);
   }
 
   componentDidUpdate() {
-    const userInUrl = this.props.location.pathname.slice(1);
+    const { userName } = this.props.match.params;
 
-    if (userInUrl !== this.state.userName) {
-      this.handleUser(userInUrl);
+    if (userName !== this.state.userName) {
+      this.handleUser(userName);
     }
   }
 
@@ -33,9 +37,9 @@ class App extends Component {
     this.handleUser(userName);
   };
 
-  handleUser = (userName, page = 1) => {
-    this.setState({ userName, repos: [], page });
-    this.handleRetrieve(userName, page);
+  handleUser = userName => {
+    this.setState({ userName, repos: [], page: 1 });
+    this.handleRetrieve(userName);
   };
 
   handleRetrieve = (userName, page = 1) => {
@@ -52,10 +56,7 @@ class App extends Component {
       })
       .then(() => fetchContributorsForAll(this.state.repos))
       .then(contributors => this.setState({ contributors }))
-      .catch(error => {
-        console.error(error);
-        this.setState({ error, loading: false });
-      });
+      .catch(error => this.setState({ error, loading: false }));
   };
 
   handleLoadMoreRepos = () => {
@@ -63,7 +64,7 @@ class App extends Component {
     this.handleRetrieve(userName, page + 1);
   };
 
-  onLoadMoreContributors = (repo, page) => {
+  handleLoadMoreContributors = (repo, page) => {
     const { contributors } = this.state;
     const { repoName } = repo;
 
@@ -92,23 +93,31 @@ class App extends Component {
       loadingContributorsOf
     } = this.state;
 
+    const shouldLoadMore =
+      repos.length % MAX_ITEMS === 0 && repos.length > 0 && !loading;
+
     return (
       <div className="app">
         <header className="app__header">
           <h1>GitHub Portfolio</h1>
         </header>
-        <Search error={error} handleSubmit={this.handleSubmit} />
-        {userName && !error ? (
-          <ReposList
-            repos={repos}
-            contributors={contributors}
-            loading={loading}
-            userName={userName}
-            onLoadMoreRepos={this.handleLoadMoreRepos}
-            onLoadMoreContributors={this.onLoadMoreContributors}
-            loadingContributorsOf={loadingContributorsOf}
-          />
-        ) : null}
+        <Search error={error} onSubmit={this.handleSubmit} />
+        {userName && !error && (
+          <React.Fragment>
+            {repos.length === 0 && !loading ? (
+              <NoRepos userName={userName} />
+            ) : (
+              <RepoList
+                repos={repos}
+                contributors={contributors}
+                onLoadMoreContributors={this.handleLoadMoreContributors}
+                loadingContributorsOf={loadingContributorsOf}
+              />
+            )}
+            {shouldLoadMore && <LoadMore onClick={this.handleLoadMoreRepos} />}
+          </React.Fragment>
+        )}
+        {loading && <Spinner className="app__spinner" />}
       </div>
     );
   }
