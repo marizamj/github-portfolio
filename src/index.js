@@ -6,7 +6,10 @@ import App from './containers/App';
 
 ReactDOM.render(
   <BrowserRouter>
-    <Route component={App} />
+    <React.Fragment>
+      <Route exact path="/" component={App} />
+      <Route exact path="/:userName" component={App} />
+    </React.Fragment>
   </BrowserRouter>,
   document.getElementById('root')
 );
