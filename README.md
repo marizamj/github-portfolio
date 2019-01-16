@@ -4,7 +4,7 @@
 
 ### Prerequisites
 
-* You will need [Node.js](https://nodejs.org/en/) and [Yarn](https://yarnpkg.com/en/) to run this project.
+* You will need [Node.js](https://nodejs.org/en/) v8 of higher and [Yarn](https://yarnpkg.com/en/) to run this project.
 
 ### Installing
 
