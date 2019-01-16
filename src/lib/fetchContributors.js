@@ -1,4 +1,5 @@
 import * as Promise from 'bluebird';
+import { authorizedFetch } from './';
 
 export function fetchContributorsForAll(repos) {
   return Promise.map(
@@ -16,11 +17,7 @@ export function fetchContributorsForAll(repos) {
 }
 
 export function fetchContributors(repo, page = 1) {
-  return fetch(`${repo.contributors_url}?page=${page}`, {
-    headers: {
-      Authorization: 'token df3c59ad01a2fb5ab33f365b7d14d86af3fb4cdc'
-    }
-  })
+  return authorizedFetch(`${repo.contributorsUrl}?page=${page}`)
     .then(res => res.json())
     .then(res =>
       res.length > 0
@@ -33,8 +30,7 @@ export function fetchContributors(repo, page = 1) {
         : [
             {
               repoName: repo.repoName,
-              userName: 'no contributors',
-              contributions: 0
+              noContributors: true
             }
           ]
     );

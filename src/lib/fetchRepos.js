@@ -1,21 +1,23 @@
+import { authorizedFetch } from './';
+
 export default function fetchRepos(userName, page = 1) {
   return userName
-    ? fetch(
-        `https://api.github.com/users/${userName}/repos?sort=created&page=${page}`,
-        {
-          headers: {
-            Authorization: 'token df3c59ad01a2fb5ab33f365b7d14d86af3fb4cdc'
-          }
-        }
+    ? authorizedFetch(
+        `https://api.github.com/users/${userName}/repos?sort=created&page=${page}`
       )
         .then(res => res.json())
-        .then(res =>
-          res.map(({ id, name, url, contributors_url }) => ({
+        .then(res => {
+          if (!Array.isArray(res)) {
+            throw res;
+          }
+
+          return res.map(({ id, name, url, contributors_url, full_name }) => ({
             id,
             url,
             repoName: name,
-            contributors_url
-          }))
-        )
+            contributorsUrl: contributors_url,
+            fullName: full_name
+          }));
+        })
     : Promise.resolve([]);
 }
