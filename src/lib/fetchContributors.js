@@ -4,9 +4,7 @@ import { authorizedFetch } from './';
 export function fetchContributorsForAll(repos) {
   return Promise.map(
     repos,
-    repo => {
-      return repo.contributors || fetchContributors(repo);
-    },
+    repo => repo.contributors || fetchContributors(repo),
     { concurrency: 3 }
   ).then(contributorsList =>
     contributorsList.reduce((acc, el) => {
@@ -18,7 +16,7 @@ export function fetchContributorsForAll(repos) {
 
 export function fetchContributors(repo, page = 1) {
   return authorizedFetch(`${repo.contributorsUrl}?page=${page}`)
-    .then(res => res.json())
+    .then(res => (res.status === 200 ? res.json() : []))
     .then(res =>
       res.length > 0
         ? res.map(({ id, login, contributions }) => ({
